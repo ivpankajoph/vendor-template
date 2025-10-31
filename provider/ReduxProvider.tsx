@@ -5,7 +5,11 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "@/store/store";
 
-export default function ReduxProvider({ children }: { children: React.ReactNode }) {
+export default function ReduxProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
