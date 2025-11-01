@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import Navbar from "../navbar";
-
 import { AppDispatch, RootState } from "@/store/store";
 import { fetchHomepageTemplate } from "@/store/slices/homepageslice";
 
@@ -32,7 +31,7 @@ export default function UrbanJungleLanding2() {
 
   const dispatch = useDispatch<AppDispatch>();
   const { data, loading, error } = useSelector(
-    (state: RootState) => state.homepage
+    (state: RootState) => state?.homepage
   );
 
   useEffect(() => {
@@ -42,9 +41,11 @@ export default function UrbanJungleLanding2() {
   }, [vendorId, dispatch]);
 
   if (loading) return <div className="text-center py-20">Loading...</div>;
-  if (error) return <div className="text-center py-20 text-red-500">{error}</div>;
+  if (error)
+    return <div className="text-center py-20 text-red-500">{error}</div>;
 
-  const homepage: HomepageData | null = data;   
+  const homepage: HomepageData | null = data || null;
+  console.log("aksdsakjdhsak", homepage);
 
   return (
     <div className="min-h-screen relative">
@@ -67,7 +68,8 @@ export default function UrbanJungleLanding2() {
           </p>
 
           <h1 className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight mb-8 max-w-6xl">
-            {homepage?.header_text || "Discover the Beauty of Nature at Your Fingertips"}
+            {homepage?.header_text ||
+              "Discover the Beauty of Nature at Your Fingertips"}
           </h1>
 
           <Link href="/all-products">
@@ -75,58 +77,54 @@ export default function UrbanJungleLanding2() {
               {homepage?.button_header || "Shop all Products"}
             </button>
           </Link>
-
-          {/* Large Text & Summary */}
-          {homepage?.description && (
-            <div className="mt-8 text-white max-w-3xl">
-              <p className="text-2xl lg:text-3xl font-semibold mb-4">{homepage.description.large_text}</p>
-              <p className="text-lg lg:text-xl">{homepage.description.summary}</p>
-            </div>
-          )}
-
-          {/* Stats */}
-          {homepage?.description && (
-            <div className="mt-12 flex gap-12 justify-center flex-wrap text-white">
-              <div className="text-center">
-                <p className="text-3xl lg:text-4xl font-bold">{homepage.description.percent.percent_in_number}%</p>
-                <p>{homepage.description.percent.percent_text}</p>
-              </div>
-              <div className="text-center">
-                <p className="text-3xl lg:text-4xl font-bold">{homepage.description.sold.sold_number}</p>
-                <p>{homepage.description.sold.sold_text}</p>
-              </div>
-            </div>
-          )}
         </div>
 
-        {/* Features Section */}
-        {homepage?.description?.features && homepage.description.features.length > 0 && (
-          <div className="relative z-10 bg-gray-50 py-16 lg:py-20">
-            <div className="max-w-7xl mx-auto px-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-                {homepage.description.features.map((feature, idx) => (
-                  <div key={idx} className="flex flex-col items-center text-center">
-                    <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-green-100 flex items-center justify-center mb-6">
-                      {feature.icon ? (
-                        <img src={feature.icon} alt={feature.title} className="w-10 h-10 lg:w-12 lg:h-12" />
-                      ) : (
-                        <svg
-                          className="w-10 h-10 lg:w-12 lg:h-12"
-                          fill="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none" />
-                        </svg>
-                      )}
+        {homepage?.description?.features &&
+          homepage.description.features.length > 0 && (
+            <div className="relative z-10 bg-gray-50 py-16 lg:py-20">
+              <div className="max-w-7xl mx-auto px-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+                  {homepage.description.features.map((feature, idx) => (
+                    <div
+                      key={idx}
+                      className="flex flex-col items-center text-center"
+                    >
+                      <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-green-100 flex items-center justify-center mb-6">
+                        {feature.icon ? (
+                          <img
+                            src={feature.icon}
+                            alt={feature.title}
+                            className="w-10 h-10 lg:w-12 lg:h-12"
+                          />
+                        ) : (
+                          <svg
+                            className="w-10 h-10 lg:w-12 lg:h-12"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <circle
+                              cx="12"
+                              cy="12"
+                              r="10"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              fill="none"
+                            />
+                          </svg>
+                        )}
+                      </div>
+                      <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-3">
+                        {feature.title}
+                      </h3>
+                      <p className="text-gray-600 text-base lg:text-lg">
+                        {feature.description}
+                      </p>
                     </div>
-                    <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-3">{feature.title}</h3>
-                    <p className="text-gray-600 text-base lg:text-lg">{feature.description}</p>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import  { useState } from "react";
 import {
   Facebook,
   Instagram,
@@ -25,11 +25,9 @@ export default function Navbar() {
           </div>
         </div>
         <span className="text-white text-xl lg:text-2xl font-serif tracking-wide">
-          URBAN JUNGLE CO.
+          YOUR LOGO
         </span>
       </div>
-
-      {/* Desktop Navigation */}
       <div className="hidden lg:flex items-center gap-8">
         <Link href="/" className="text-white hover:text-green-400 transition-colors text-lg">
           Home

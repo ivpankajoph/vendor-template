@@ -15,12 +15,12 @@ const initialState: TemplateState = {
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export const fetchHomepageTemplate = createAsyncThunk(
-  "template/fetchHomepageTemplate",
+export const fetchContactpageTemplate = createAsyncThunk(
+  "template/fetchaontactpageTemplate",
   async (vendor_id: string, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/templates/homepage?vendor_id=${vendor_id}`
+        `${BASE_URL}/templates/contactpage?vendor_id=${vendor_id}`
       );
       return response.data;
     } catch (error: any) {
@@ -41,12 +41,12 @@ const templateSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchHomepageTemplate.pending, (state) => {
+      .addCase(fetchContactpageTemplate.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(
-        fetchHomepageTemplate.fulfilled,
+        fetchContactpageTemplate.fulfilled,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
           if (action.payload?.data) {
@@ -59,7 +59,7 @@ const templateSlice = createSlice({
       )
 
       .addCase(
-        fetchHomepageTemplate.rejected,
+        fetchContactpageTemplate.rejected,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload;

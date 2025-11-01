@@ -3,6 +3,8 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import homepageReducer from "./slices/homepageslice";
+import aboutpageReducer from "./slices/aboutpageslice"
+import contactpageReducer from "./slices/contactpageslice"
 
 const persistConfig = {
   key: "root",
@@ -11,6 +13,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   homepage: homepageReducer,
+  aboutpage:aboutpageReducer,
+  contactpage:contactpageReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
